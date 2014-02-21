@@ -19,7 +19,8 @@ This is meant to be a simple, easy to use seed for a rich client side Applicatio
 
 in the terminal
 ```terminal
-Git clone repo
+git clone https://github.com/bheithaus/coffeeboiler.git
+cd coffeeboiler
 npm install
 bower install
 gulp
