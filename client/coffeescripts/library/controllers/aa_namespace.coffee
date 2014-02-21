@@ -1,0 +1,1 @@
+angular.module 'gryfter.controllers', []

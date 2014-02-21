@@ -1,0 +1,8 @@
+{  "watch": [
+    "/client/coffeescripts/",
+    "/app.coffee",
+    "/route_map.coffee",
+    "/routes/*",
+    "/library/*"
+  ]
+}

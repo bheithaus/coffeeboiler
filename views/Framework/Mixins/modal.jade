@@ -1,0 +1,18 @@
+mixin modal(name, title, large)
+  div(class="modal fade#{ large ? ' bs-modal-lg' : '' }", id=name?name:null, role="dialog")
+    div.modal-dialog
+      div.modal-content
+        div.modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true")
+            span.fa.fa-times
+
+          if title
+            h4.modal-title= title
+          else
+            h1 Title
+
+        div.modal-body
+          if block
+            block
+          else
+            p Modal Content

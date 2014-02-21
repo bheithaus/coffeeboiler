@@ -1,0 +1,8 @@
+h1 List
+
+div(ng-hide='entities.length')
+  p There are no Gryfts, this is insane!! please capture one
+
+div.ui.ui-grid
+  div.col-xs-3(ng-repeat='entity in entities', ng-class='{active : isFocused(entity)}')
+    div.card.clearfix {{ entity.name }}

@@ -1,0 +1,44 @@
+
+nav.navbar.navbar-default.navbar-inverse.navbar-fixed-top(role='navigation')
+  div.container-fluid
+    // Brand and toggle get grouped for better mobile display
+    div.navbar-header
+      button.navbar-toggle(type='button', data-toggle='collapse', data-target='#mobile-header')
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+
+      a.navbar-brand(href='/') Boiler
+
+    // Collect the nav links, forms, and other content for toggling
+    div#mobile-header.collapse.navbar-collapse
+      ul.nav.navbar-nav
+        li
+          a(href='/create') Create
+        li
+          a(href='/entities') List
+          
+      form.navbar-form.navbar-left(role='search')
+        div.form-group
+          div.input-group
+            span.input-group-addon
+              span.glyphicon.glyphicon-search
+            input.form-control(type='text', placeholder='Search')
+
+      ul.nav.navbar-nav.navbar-right
+        li(ng-hide="loggedIn()")
+          a.btn.btn-success(data-toggle='modal', data-target='#register') Sign Up
+        li(ng-hide="loggedIn()")
+          a(ng-click="open()") Login
+
+        li.dropdown(ng-show="loggedIn()")
+          a.dropdown-toggle(href='#', data-toggle='dropdown') Menu
+
+          ul.dropdown-menu
+            li
+              a(href='#') Profile
+
+            li
+              a.btn.btn-default(href='/logout') Logout
+

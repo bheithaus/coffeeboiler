@@ -1,0 +1,18 @@
+doctype html
+
+html
+  head
+    block head
+      include Framework/head
+      yield
+
+  body(ng-app="gryfter")
+    div(ng-controller='AppCtrl')
+      include Framework/header
+      include Components/User/register
+
+      div.container
+        div.content.row
+          block content
+            yield
+
