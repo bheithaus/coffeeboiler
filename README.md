@@ -18,9 +18,11 @@ This is meant to be a simple, easy to use seed for a rich client side Applicatio
 ## Installation / Usage
 
 in the terminal
-`Git clone repo
-`npm install
-`bower install
-`gulp
+```terminal
+Git clone repo
+npm install
+bower install
+gulp
+```
 
 And you're off!
