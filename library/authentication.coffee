@@ -1,5 +1,3 @@
-LocalStrategy = require('passport-local').Strategy
-passport = require 'passport'
 async = require 'async'
 utils = require 'lodash'
 jwt = require 'jsonwebtoken'
@@ -92,37 +90,3 @@ module.exports =
   logout: (req, res) ->
     req.logout()
     res.json { ok: true }
-
-  # initial setup of Passport Auth
-  setup: (app) ->
-    app.use passport.initialize()
-    app.use passport.session()
-
-    # passport session setup
-    passport.serializeUser (user, done) ->
-      done null, user.id
-
-    passport.deserializeUser (id, done) ->
-      User.findById id, (err, user) ->
-        cleaned = 
-          name: user.name
-          email: user.email
-          id: user._id
-
-        done err, cleaned
-      
-    passport.use(new LocalStrategy({ usernameField: 'name' },
-      (username, password, done) ->
-        User.findOne { name: username }, (err, user) ->          
-          if err
-            return done err
-
-          if not user
-            return done null, false, { message: 'Incorrect username.' } 
-        
-          user.comparePassword password, (error, valid) ->
-            if not valid
-              done null, false, { message: 'Incorrect password.' }
-            else 
-             done null, user
-    ))

@@ -48,8 +48,6 @@ app.use paths.public
 # protect /api routes with JWT
 app.use '/api', expressJwt({ secret: config.JWT_Token })
 
-# setup Authentication with Passport
-library.authentication.setup(app)
 
 app.use app.router
 
