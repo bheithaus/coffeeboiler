@@ -1,1 +1,1 @@
-angular.module 'gryfter.controllers', []
+angular.module 'coffeeboiler.controllers', []

@@ -1,5 +1,5 @@
 # /* Controllers */
-angular.module 'gryfter.controllers'
+angular.module 'coffeeboiler.controllers'
 
 .controller 'ListCtrl', ($scope, $http, $location, LoginModal, User) ->
   $http.get('/api/list')

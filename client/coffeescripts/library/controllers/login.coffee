@@ -1,5 +1,5 @@
 # /* Controllers */
-angular.module 'gryfter.controllers'
+angular.module 'coffeeboiler.controllers'
 
 .controller 'LoginInstanceCtrl', ($scope, $modalInstance, Auth, $state) ->
   $scope.user = {}

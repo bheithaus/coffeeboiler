@@ -1,11 +1,11 @@
-gryfter = angular.module 'gryfter', [
+coffeeboiler = angular.module 'coffeeboiler', [
   'ui.router'
   'ui.bootstrap'
   'ngCookies'
   'ngResource'
-  'gryfter.controllers'
-  'gryfter.directives'
-  'gryfter.services'
+  'coffeeboiler.controllers'
+  'coffeeboiler.directives'
+  'coffeeboiler.services'
 ]
 
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) ->

@@ -1,7 +1,7 @@
 'use strict'
 
 # /* Directives */
-angular.module 'gryfter.directives', []
+angular.module 'coffeeboiler.directives', []
 .directive 'gryft', 
   () ->
     restrict: 'A'
@@ -13,7 +13,7 @@ angular.module 'gryfter.directives', []
     link: ($scope, element, attrs) ->
       meta = $scope.meta
       if meta._id
-        $scope.src = "#{ gryfter_constants.gryft_base }#{ meta._id }.jpg"
+        $scope.src = "#{ coffeeboiler_constants.gryft_base }#{ meta._id }.jpg"
         $scope.creator = meta.creator
         $scope.price = meta.price || 'no price'
 

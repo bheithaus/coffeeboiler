@@ -1,5 +1,5 @@
 # /* Controllers */
-angular.module 'gryfter.controllers'
+angular.module 'coffeeboiler.controllers'
 
 #root scope Controller
 .controller 'AppCtrl', ($scope, $http, $location, LoginModal, User) ->

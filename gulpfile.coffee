@@ -21,7 +21,7 @@ vendor_js =
       'angular-cookies/angular-cookies.js'
       'angular-resource/angular-resource.js'
 
-      'jquery/jquery.min.js'
+      'jquery/dist/jquery.js'
       'bootstrap/dist/js/bootstrap.js'
       'lodash/dist/lodash.js'
       'socket.io/socket.io.js"'

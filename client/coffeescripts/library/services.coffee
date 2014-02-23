@@ -1,6 +1,6 @@
 # Services
 # 
-angular.module 'gryfter.services', [] 
+angular.module 'coffeeboiler.services', [] 
 
 .factory 'Session', ($resource) ->
   $resource '/authentication'
