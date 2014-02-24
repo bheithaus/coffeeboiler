@@ -2,6 +2,7 @@
 
 # /* Directives */
 angular.module 'coffeeboiler.directives', []
+
 .directive 'gryft', 
   () ->
     restrict: 'A'

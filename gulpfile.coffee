@@ -10,6 +10,8 @@ concat = includeG 'concat'
 uglify = includeG 'uglify'
 gutil = includeG 'util'
 concat = includeG 'concat'
+stylus = includeG 'stylus'
+watch = includeG 'watch'
 
 # Paths
 vendor_js = 
@@ -41,21 +43,20 @@ for namespace, obj of vendor_js
 
 client_base = './client/coffeescripts/'
 path = 
+  styles:
+    src: 'client/stylesheets/**/*.styl'
+    dest: 'public/stylesheets'
+
   scripts: 
     src: {
       client:[
         client_base + 'config/*.coffee'
-        client_base + 'library/controllers/*.coffee'
-        client_base + 'library/*.coffee'
+        client_base + 'library/**/*.coffee'
         client_base + '*.coffee'
       ]
       server: './**.coffee'
     }
     dest: './public/javascripts'
-
-
-
-
 
 
 # Functions
@@ -70,11 +71,21 @@ scripts = () ->
     .pipe concat('vendor.js')
     .pipe gulp.dest(path.scripts.dest)
 
+styles = () ->
+  gulp.src path.styles.src
+    .pipe stylus({ use: ['nib'] })
+    .pipe concat('style.css') 
+    .pipe gulp.dest(path.styles.dest)
 
 # Tasks
 gulp.task 'scripts', scripts
+gulp.task 'styles', styles
+gulp.task 'watch', () ->
+  gulp.watch path.styles.src, () ->
+    gulp.run('styles')
+  
 
-gulp.task 'default', ['scripts']
+gulp.task 'default', ['scripts', 'styles', 'watch']
 
 
 # You can minify your Jade Templates here

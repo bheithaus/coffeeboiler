@@ -45,7 +45,7 @@ coffeeboiler = angular.module 'coffeeboiler', [
       controller: 'LogoutCtrl'
 
   # For any unmatched url, redirect to /state1
-  $urlRouterProvider.otherwise '/capture'
+  $urlRouterProvider.otherwise '/'
 
 .run ['$rootScope', '$state', 'Auth', ($rootScope, $state, Auth) ->
   Auth.monitor()

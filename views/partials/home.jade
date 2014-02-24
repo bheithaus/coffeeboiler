@@ -1,12 +1,24 @@
-div.jumbotron  
-  h1 Hello {{ name }}, welcome to Angular Coffee Boiler
+div.jumbotron.clearfix 
+  h1 {{ name }}, welcome to Coffee Boiler
 
-  div.col-xs-4.col-xs-offset-4
-    h4 Featuring
-    ul.list-unstyled
-      li Express
-      li MongoDB
-      li CoffeeScript
-      li Angular
-      li Bootstrap
-      li Socket.io
+  div
+    h2 Featuring
+    div
+      div.col-xs-4
+        h4
+          a(target='_blank', href='http://expressjs.com') Express JS
+      div.col-xs-4
+        h4
+          a(target='_blank', href='http://www.mongodb.org') MongoDB
+      div.col-xs-4
+        h4
+          a(target='_blank', href='http://coffeescript.org') CoffeeScript
+      div.col-xs-4
+        h4
+          a(target='_blank', href='http://angularjs.org') Angular JS
+      div.col-xs-4
+        h4
+          a(target='_blank', href='http://getbootstrap.com') Bootstrap 3
+      div.col-xs-4
+        h4
+          a(target='_blank', href='http://socket.io') Socket.io

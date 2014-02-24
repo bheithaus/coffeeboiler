@@ -1,69 +1,9 @@
-window.myapp_constants = {
+window.coffeeboiler_constants = {
   some_url: 'http://www.example.com'
 };
 
-angular.module('gryfter.controllers', []);
-
-angular.module('gryfter.controllers').controller('CreateCtrl', function($scope, $http, $location, LoginModal, User) {
-  return $scope.name = 'hey derr';
-});
-
-angular.module('gryfter.controllers').controller('HomeCtrl', function($scope, $http, $location, LoginModal, User) {
-  return $scope.name = 'hey derr';
-});
-
-angular.module('gryfter.controllers').controller('ListCtrl', function($scope, $http, $location, LoginModal, User) {
-  $http.get('/api/list').success(function() {
-    return console.log('ars', arguments);
-  });
-  return $scope.entities = [
-    {
-      name: 'one'
-    }, {
-      name: 'two'
-    }
-  ];
-});
-
-angular.module('gryfter.controllers').controller('LoginInstanceCtrl', function($scope, $modalInstance, Auth, $state) {
-  $scope.user = {};
-  $scope.login = function() {
-    return Auth.login('password', {
-      name: $scope.user.name,
-      password: $scope.user.password
-    }, function(error) {
-      if (!error) {
-        $modalInstance.dismiss();
-        return $state.transitionTo('home');
-      } else {
-        return console.log('ERROR');
-      }
-    });
-  };
-  return $scope.cancel = function() {
-    return $modalInstance.dismiss('cancel');
-  };
-}).controller('LoginCtrl', function(LoginModal) {
-  return LoginModal.open();
-});
-
-angular.module('gryfter.controllers').controller('LogoutCtrl', function($scope, $http, Auth, $state) {
-  return Auth.logout(function() {
-    return $state.transitionTo('home');
-  });
-});
-
-angular.module('gryfter.controllers').controller('AppCtrl', function($scope, $http, $location, LoginModal, User) {
-  $scope.open = LoginModal.open;
-  $scope.errors = $location.search().incorrect;
-  $scope.loggedIn = function() {
-    return User.loggedIn();
-  };
-  return $scope.user = User;
-});
-
 'use strict';
-angular.module('gryfter.directives', []).directive('gryft', function() {
+angular.module('coffeeboiler.directives', []).directive('gryft', function() {
   return {
     restrict: 'A',
     scope: {
@@ -74,7 +14,7 @@ angular.module('gryfter.directives', []).directive('gryft', function() {
       var meta;
       meta = $scope.meta;
       if (meta._id) {
-        $scope.src = "" + gryfter_constants.gryft_base + meta._id + ".jpg";
+        $scope.src = "" + coffeeboiler_constants.gryft_base + meta._id + ".jpg";
         $scope.creator = meta.creator;
         return $scope.price = meta.price || 'no price';
       }
@@ -106,18 +46,138 @@ angular.module('gryfter.directives', []).directive('gryft', function() {
   };
 });
 
-angular.module('myApp.filters', []).filter('interpolate', function(version) {
+angular.module('coffeeboiler.filters', []).filter('interpolate', function(version) {
   return function(text) {
     return String(text).replace(/\%VERSION\%/mg, version);
   };
 });
 
-angular.module('gryfter.services', []).factory('Session', function($resource) {
+angular.module('coffeeboiler.controllers', []);
+
+angular.module('coffeeboiler.controllers').controller('CreateCtrl', function($scope, $http, $location, LoginModal, User) {
+  return $scope.name = 'hey derr';
+});
+
+angular.module('coffeeboiler.controllers').controller('HomeCtrl', function($scope, $http, $location, LoginModal, User) {
+  return $scope.name = 'hey derr';
+});
+
+angular.module('coffeeboiler.controllers').controller('ListCtrl', function($scope, $http, $location, LoginModal, User) {
+  $http.get('/api/list').success(function() {
+    return console.log('ars', arguments);
+  });
+  return $scope.entities = [
+    {
+      name: 'one'
+    }, {
+      name: 'two'
+    }
+  ];
+});
+
+angular.module('coffeeboiler.controllers').controller('LoginInstanceCtrl', function($scope, $modalInstance, Auth, $state) {
+  $scope.user = {};
+  $scope.login = function() {
+    return Auth.login('password', {
+      name: $scope.user.name,
+      password: $scope.user.password
+    }, function(error) {
+      if (!error) {
+        $modalInstance.dismiss();
+        return $state.transitionTo('home');
+      } else {
+        return $scope.error = true;
+      }
+    });
+  };
+  return $scope.cancel = function() {
+    return $modalInstance.dismiss('cancel');
+  };
+}).controller('LoginCtrl', function(LoginModal) {
+  return LoginModal.open();
+});
+
+angular.module('coffeeboiler.controllers').controller('LogoutCtrl', function($scope, $http, Auth, $state) {
+  return Auth.logout(function() {
+    return $state.transitionTo('home');
+  });
+});
+
+angular.module('coffeeboiler.controllers').controller('RegisterInstanceCtrl', function($scope, $modalInstance, $state, Auth) {
+  $scope.user = {};
+  $scope.register = function() {
+    return Auth.create($scope.user, function(errors) {
+      var error, field, _results;
+      if (!errors) {
+        $modalInstance.dismiss();
+        return $state.transitionTo('home');
+      } else {
+        _results = [];
+        for (field in errors) {
+          error = errors[field];
+          _results.push($scope[field + '_error'] = error);
+        }
+        return _results;
+      }
+    });
+  };
+  return $scope.cancel = function() {
+    return $modalInstance.dismiss('cancel');
+  };
+}).controller('LoginCtrl', function(LoginModal) {
+  return LoginModal.open();
+});
+
+angular.module('coffeeboiler.controllers').controller('AppCtrl', function($scope, $location, LoginModal, RegisterModal, UserSession, Auth, $state) {
+  $scope.logout = function() {
+    return Auth.logout(function() {
+      return $state.transitionTo('home');
+    });
+  };
+  $scope.login = LoginModal.open;
+  $scope.register = RegisterModal.open;
+  $scope.loggedIn = function() {
+    return UserSession.loggedIn();
+  };
+  return $scope.user = UserSession;
+});
+
+angular.module('coffeeboiler.services', []);
+
+angular.module('coffeeboiler.services').factory('LoginModal', function($modal, $log) {
+  return {
+    open: function() {
+      var modalInstance;
+      return modalInstance = $modal.open({
+        templateUrl: 'partials/session/login',
+        controller: 'LoginInstanceCtrl'
+      });
+    }
+  };
+}).factory('RegisterModal', function($modal, $log) {
+  return {
+    open: function() {
+      var modalInstance;
+      return modalInstance = $modal.open({
+        templateUrl: 'partials/session/register',
+        controller: 'RegisterInstanceCtrl'
+      });
+    }
+  };
+});
+
+angular.module('coffeeboiler.services').factory('Session', function($resource) {
   return $resource('/authentication');
-}).service('User', function(Session, $cookieStore, $window) {
-  var current, user;
+}).factory('User', function($resource) {
+  return $resource('/register');
+}).service('socket', function(UserSession) {
+  return io.connect(window.location.origin, {
+    query: 'token=' + UserSession.loggedIn()
+  });
+}).service('UserSession', function($window) {
+  var current, session;
   current = $window.sessionStorage.token;
-  return user = {
+  return session = {
     login: function(user) {
       $window.sessionStorage.token = user.token;
       return current = user.token;
@@ -130,9 +190,8 @@ angular.module('gryfter.services', []).factory('Session', function($resource) {
       return current;
     }
   };
-}).factory('Auth', function($rootScope, Session, User, $state, LoginModal) {
-  var auth;
-  return auth = {
+}).factory('Auth', function($rootScope, Session, UserSession, $state, LoginModal, User) {
+  return {
     login: function(provider, user, callback) {
       if (typeof callback !== 'function') {
         callback = angular.noop;
@@ -142,11 +201,25 @@ angular.module('gryfter.services', []).factory('Session', function($resource) {
         name: user.name,
         password: user.password
       }, function(data) {
-        User.login(data);
-        return callback();
-      }, function(data) {
-        User.logout();
-        return $scope.message = 'Error: Invalid user or password';
+        console.log(data);
+        if (!data.error) {
+          UserSession.login(data);
+          return callback();
+        } else {
+          UserSession.logout();
+          return callback(data.error);
+        }
+      });
+    },
+    create: function(user, callback) {
+      if (typeof callback !== 'function') {
+        callback = angular.noop;
+      }
+      return User.save(user, function(data) {
+        if (!data.errors) {
+          UserSession.login(data);
+        }
+        return callback(data.errors);
       });
     },
     logout: function(callback) {
@@ -154,13 +227,13 @@ angular.module('gryfter.services', []).factory('Session', function($resource) {
         callback = angular.noop;
       }
       return Session.remove(function() {
-        User.logout();
+        UserSession.logout();
         return callback();
       });
     },
     monitor: function() {
       return $rootScope.$on('$stateChangeStart', function(event, current, prev) {
-        if (current.authenticate && !User.loggedIn()) {
+        if (current.authenticate && !UserSession.loggedIn()) {
           $state.transitionTo('home');
           LoginModal.open();
           return event.preventDefault();
@@ -168,28 +241,18 @@ angular.module('gryfter.services', []).factory('Session', function($resource) {
       });
     }
   };
-}).factory('LoginModal', function($modal, $log) {
-  var modal;
-  return modal = {
-    open: function() {
-      var modalInstance;
-      return modalInstance = $modal.open({
-        templateUrl: 'partials/session/login',
-        controller: 'LoginInstanceCtrl'
-      });
-    }
-  };
-}).factory('authInterceptor', function($rootScope, $q, $window, $location) {
+}).factory('authInterceptor', function($rootScope, $q, $window, $location, UserSession) {
   return {
     request: function(config) {
       config.headers = config.headers || {};
-      if ($window.sessionStorage.token) {
-        config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
+      if (UserSession.loggedIn() && config.url.match(/^\/api/)) {
+        config.headers.Authorization = 'Bearer ' + UserSession.loggedIn();
       }
       return config;
     },
     responseError: function(response) {
       if (response.status === 401) {
+        UserSession.logout();
         $location.path('/');
       }
       return response || $q.when(response);
@@ -197,9 +260,9 @@ angular.module('gryfter.services', []).factory('Session', function($resource) {
   };
 });
 
-var gryfter;
+var coffeeboiler;
 
-gryfter = angular.module('gryfter', ['ui.router', 'ui.bootstrap', 'ngCookies', 'ngResource', 'gryfter.controllers', 'gryfter.directives', 'gryfter.services']).config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+coffeeboiler = angular.module('coffeeboiler', ['ui.router', 'ui.bootstrap', 'ngCookies', 'ngResource', 'coffeeboiler.controllers', 'coffeeboiler.directives', 'coffeeboiler.services']).config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
   $httpProvider.interceptors.push('authInterceptor');
   $locationProvider.html5Mode(true);
   $stateProvider.state('home', {
@@ -225,7 +288,7 @@ gryfter = angular.module('gryfter', ['ui.router', 'ui.bootstrap', 'ngCookies', '
     url: '/logout',
     controller: 'LogoutCtrl'
   });
-  return $urlRouterProvider.otherwise('/capture');
+  return $urlRouterProvider.otherwise('/');
 }).run([
   '$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
     return Auth.monitor();

@@ -12,8 +12,8 @@ angular.module 'coffeeboiler.controllers'
       if not error
         $modalInstance.dismiss()
         $state.transitionTo 'home'
-      else 
-        console.log 'ERROR'
+      else
+        $scope.error = true
 
   $scope.cancel = () ->
     $modalInstance.dismiss('cancel')

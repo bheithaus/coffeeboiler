@@ -1,0 +1,27 @@
+div.modal-header
+  h3 Sign Up
+  
+div.modal-body
+  form(ng-submit='register()')
+    div.form-group
+      label Username:
+      div {{name_error}}
+      input.form-control(required='true', type='text', ng-model="user.name")
+    
+    div.form-group
+      label Email: 
+      div {{email_error}}
+      input.form-control(required='true', type='text', ng-model="user.email")
+
+    div.form-group
+      label Password:
+      div {{password_error}}
+      input.form-control(required='true', type='password', ng-model="user.password")
+    
+    div.form-group
+      label Confirm Password:
+      div {{password_confirm_error}}
+      input.form-control(required='true', type='password', ng-model="user.password_confirm")   
+
+    div
+      input.btn.btn-primary(type='submit', value='Sign Up')

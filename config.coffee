@@ -1,3 +1,3 @@
 module.exports = 
-  db: 'mongodb://localhost/boilerplate-dev'
+  db: 'mongodb://localhost/coffeeboiler-dev'
   JWT_Token: 'SUPER_SECRET_TOKEN'

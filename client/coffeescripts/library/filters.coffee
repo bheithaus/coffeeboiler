@@ -1,5 +1,5 @@
 # /* Filters */
-angular.module 'myApp.filters', []
+angular.module 'coffeeboiler.filters', []
 
 .filter 'interpolate', (version) ->
   return (text) ->
