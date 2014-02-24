@@ -27,7 +27,8 @@
     "async": "~0.2.10",
     "bcrypt": "~0.7.7",
     "express-jwt": "~0.1.2",
-    "jsonwebtoken": "~0.1.0"
+    "jsonwebtoken": "~0.1.0",
+    "gulp-stylus": "0.0.13"
   },
   "devDependencies": {
     "gulp": "~3.5.2",

@@ -11,7 +11,6 @@ uglify = includeG 'uglify'
 gutil = includeG 'util'
 concat = includeG 'concat'
 stylus = includeG 'stylus'
-watch = includeG 'watch'
 
 # Paths
 vendor_js = 
