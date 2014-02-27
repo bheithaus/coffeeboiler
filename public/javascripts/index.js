@@ -201,7 +201,6 @@ angular.module('coffeeboiler.services').factory('Session', function($resource) {
         name: user.name,
         password: user.password
       }, function(data) {
-        console.log(data);
         if (!data.error) {
           UserSession.login(data);
           return callback();
@@ -241,7 +240,9 @@ angular.module('coffeeboiler.services').factory('Session', function($resource) {
       });
     }
   };
-}).factory('authInterceptor', function($rootScope, $q, $window, $location, UserSession) {
+}).factory('authInterceptor', function($q, UserSession, $injector) {
+  var $state, LoginModal;
+  $state = LoginModal = null;
   return {
     request: function(config) {
       config.headers = config.headers || {};
@@ -252,8 +253,11 @@ angular.module('coffeeboiler.services').factory('Session', function($resource) {
     },
     responseError: function(response) {
       if (response.status === 401) {
+        $state = $injector.get('$state');
+        LoginModal = $injector.get('LoginModal');
         UserSession.logout();
-        $location.path('/');
+        $state.transitionTo('home');
+        LoginModal.open();
       }
       return response || $q.when(response);
     }

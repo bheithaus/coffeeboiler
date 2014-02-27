@@ -36,14 +36,13 @@ angular.module 'coffeeboiler.services'
       name: user.name
       password: user.password
     , (data) ->
-      console.log data
       if not data.error
         # success
         UserSession.login data
         callback()
       else 
         UserSession.logout()
-        callback(data.error)
+        callback data.error
 
   create: (user, callback) ->
     if typeof callback isnt 'function'
@@ -70,7 +69,9 @@ angular.module 'coffeeboiler.services'
         LoginModal.open()
         event.preventDefault()
 
-.factory 'authInterceptor', ($rootScope, $q, $window, $location, UserSession) ->
+.factory 'authInterceptor', ($q, UserSession, $injector) ->
+  $state = LoginModal = null
+
   request: (config) ->
     config.headers = config.headers or {}
     if UserSession.loggedIn() and config.url.match /^\/api/
@@ -80,7 +81,12 @@ angular.module 'coffeeboiler.services'
 
   responseError: (response) ->
     if response.status is 401
+      $state = $injector.get '$state'
+      LoginModal = $injector.get 'LoginModal'
       UserSession.logout()
-      $location.path '/'
+      $state.transitionTo 'home'
+      LoginModal.open()
+
+
 
     response or $q.when response
