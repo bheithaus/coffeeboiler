@@ -22,7 +22,7 @@
     "gulp-uglify": "~0.2.1",
     "nodemon": "~1.0.14",
     "socket.io": "~0.9.16",
-    "lodash": "~2.4.1",
+    "lodash": "~4.17.19",
     "mongoose": "~3.8.7",
     "async": "~0.2.10",
     "bcrypt": "~0.7.7",
